@@ -1,0 +1,95 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+
+{% block title %}Register - Premium PetShop{% endblock %}
+
+{% block content %}
+<div class="container d-flex align-items-center justify-content-center" style="min-height: 80vh;">
+    <div class="card shadow-lg border-0 rounded-4" style="width: 100%; max-width: 500px; overflow: hidden;">
+        <div class="card-body p-5">
+            <div class="text-center mb-4">
+                <div class="bg-primary bg-opacity-10 text-primary rounded-circle d-inline-flex align-items-center justify-content-center mb-3"
+                    style="width: 60px; height: 60px;">
+                    <i class="fas fa-user-plus fa-2x"></i>
+                </div>
+                <h3 class="fw-bold mb-1">Create Account</h3>
+                <p class="text-muted small">Join our community today</p>
+            </div>
+
+            <form method="post" novalidate>
+                {% csrf_token %}
+
+                {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} alert-dismissible fade show small" role="alert">
+                    {{ message }}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endfor %}
+
+                {% if form.non_field_errors %}
+                <div class="alert alert-danger alert-dismissible fade show small" role="alert">
+                    {% for error in form.non_field_errors %}
+                    {{ error }}
+                    {% endfor %}
+                    <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                </div>
+                {% endif %}
+
+                <div class="mb-3">
+                    <label class="form-label text-muted small fw-bold">Full Name</label>
+                    {{ form.full_name }}
+                    {% if form.full_name.errors %}
+                    <div class="text-danger small mt-1">{{ form.full_name.errors.0 }}</div>
+                    {% endif %}
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted small fw-bold">Email Address</label>
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                        <div class="text-danger small mt-1">{{ form.email.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted small fw-bold">Phone Number</label>
+                        {{ form.phone }}
+                        {% if form.phone.errors %}
+                        <div class="text-danger small mt-1">{{ form.phone.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="row">
+                    <div class="col-md-6 mb-3">
+                        <label class="form-label text-muted small fw-bold">Password</label>
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                        <div class="text-danger small mt-1">{{ form.password1.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                    <div class="col-md-6 mb-4">
+                        <label class="form-label text-muted small fw-bold">Confirm Password</label>
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                        <div class="text-danger small mt-1">{{ form.password2.errors.0 }}</div>
+                        {% endif %}
+                    </div>
+                </div>
+
+                <div class="d-grid mb-4">
+                    <button type="submit" class="btn btn-primary btn-lg rounded-pill shadow-sm fw-bold">
+                        Create Account
+                    </button>
+                </div>
+            </form>
+
+            <div class="text-center">
+                <p class="text-muted small mb-0">Already have an account?
+                    <a href="{% url 'accounts:login' %}" class="text-primary fw-bold text-decoration-none">Sign In</a>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,69 @@
+<footer class="footer">
+    <div class="container">
+        <div class="row g-5">
+            <!-- Brand -->
+            <div class="col-lg-4">
+                <h3 class="text-white mb-4"><i class="fas fa-paw text-primary me-2"></i>PetGlow</h3>
+                <p class="text-white-50 mb-4">Elevating pet care with premium products and heartfelt services. Because
+                    they aren't just pets, they are family.</p>
+                <div class="d-flex gap-3">
+                    <a href="#" class="footer-social-icon"><i class="fab fa-facebook-f text-white"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="fab fa-twitter text-white"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="fab fa-instagram text-white"></i></a>
+                    <a href="#" class="footer-social-icon"><i class="fab fa-pinterest text-white"></i></a>
+                </div>
+            </div>
+
+            <!-- Links -->
+            <div class="col-lg-2 col-6">
+                <h5 class="text-white mb-4">Explore</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="/" class="text-white-50 hover-text-white">Home</a></li>
+                    <li class="mb-2"><a href="{% url 'pets:pet_list' %}"
+                            class="text-white-50 hover-text-white">Adopt</a></li>
+                    <li class="mb-2"><a href="{% url 'products:product_list' %}"
+                            class="text-white-50 hover-text-white">Shop</a></li>
+                    <li class="mb-2"><a href="{% url 'appointments:book_appointment' %}"
+                            class="text-white-50 hover-text-white">Services</a></li>
+                </ul>
+            </div>
+
+            <!-- Legal -->
+            <div class="col-lg-2 col-6">
+                <h5 class="text-white mb-4">Company</h5>
+                <ul class="list-unstyled">
+                    <li class="mb-2"><a href="#" class="text-white-50 hover-text-white">About Us</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 hover-text-white">Careers</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 hover-text-white">Privacy Policy</a></li>
+                    <li class="mb-2"><a href="#" class="text-white-50 hover-text-white">Terms of Service</a></li>
+                </ul>
+            </div>
+
+            <!-- Newsletter -->
+            <div class="col-lg-4">
+                <h5 class="text-white mb-4">Stay Connected</h5>
+                <p class="text-white-50 mb-3">Subscribe for exclusive offers and pet care tips.</p>
+                <form class="position-relative">
+                    <input type="email" class="form-control rounded-pill py-3 px-4 border-0"
+                        placeholder="Your email address">
+                    <button type="submit" class="btn btn-primary rounded-circle position-absolute top-0 end-0 m-1"
+                        style="width: 46px; height: 46px;">
+                        <i class="fas fa-paper-plane"></i>
+                    </button>
+                </form>
+            </div>
+        </div>
+
+        <hr class="my-5 border-secondary">
+
+        <div class="row align-items-center">
+            <div class="col-md-6 text-center text-md-start mb-3 mb-md-0">
+                <p class="text-white-50 mb-0">&copy; 2026 PetGlow Inc. All rights reserved.</p>
+            </div>
+            <div class="col-md-6 text-center text-md-end">
+                <p class="text-white-50 mb-0">Designed with <i class="fas fa-heart text-danger mx-1"></i> for nature
+                    lovers.</p>
+            </div>
+        </div>
+    </div>
+</footer>

@@ -1,0 +1,64 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block page_title %}Appointments{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0">Appointments</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Date & Time</th>
+                        <th>Customer</th>
+                        <th>Service</th>
+                        <th>Pet Name</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for appointment in appointments %}
+                    <tr>
+                        <td class="ps-4">
+                            <div class="fw-bold">{{ appointment.appointment_date }}</div>
+                            <div class="small text-muted">{{ appointment.appointment_time }}</div>
+                        </td>
+                        <td>{{ appointment.user.username }}</td>
+                        <td>{{ appointment.service }}</td>
+                        <td>{{ appointment.pet_name }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if appointment.status == 'Confirmed' %}bg-success bg-opacity-10 text-success
+                                {% elif appointment.status == 'Pending' %}bg-warning bg-opacity-10 text-warning
+                                {% elif appointment.status == 'Cancelled' %}bg-danger bg-opacity-10 text-danger
+                                {% else %}bg-secondary bg-opacity-10 text-secondary{% endif %} px-3">
+                                {{ appointment.status }}
+                            </span>
+                        </td>
+                        <td class="text-end pe-4">
+                            <div class="btn-group">
+                                <a href="#" class="btn btn-sm btn-outline-success" title="Confirm">
+                                    <i class="fas fa-check"></i>
+                                </a>
+                                <a href="#" class="btn btn-sm btn-outline-danger" title="Cancel">
+                                    <i class="fas fa-times"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">No appointments found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

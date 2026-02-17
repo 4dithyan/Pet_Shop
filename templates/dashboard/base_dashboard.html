@@ -1,0 +1,175 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Valui Admin Dashboard{% endblock %}</title>
+
+    <!-- Bootstrap 5.3 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+    <!-- Google Fonts - Poppins -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800&display=swap"
+        rel="stylesheet">
+
+    <!-- Custom Dashboard CSS -->
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+    <link rel="stylesheet" href="{% static 'css/dashboard.css' %}">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+</head>
+
+<body>
+    <div class="dashboard-wrapper">
+        <!-- Sidebar -->
+        <aside class="dashboard-sidebar" id="sidebar">
+            <div class="sidebar-header">
+                <a href="{% url 'home' %}" class="sidebar-brand">
+                    <i class="fas fa-paw"></i> PetShop Admin
+                </a>
+            </div>
+
+            <ul class="sidebar-menu">
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'dashboard:dashboard' %}"
+                        class="sidebar-link {% if request.resolver_match.url_name == 'dashboard' %}active{% endif %}">
+                        <i class="fas fa-chart-line sidebar-icon"></i>
+                        <span>Dashboard</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'dashboard:product_list' %}"
+                        class="sidebar-link {% if request.resolver_match.url_name == 'product_list' %}active{% endif %}">
+                        <i class="fas fa-box sidebar-icon"></i>
+                        <span>Products</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'dashboard:pet_list' %}"
+                        class="sidebar-link {% if request.resolver_match.url_name == 'pet_list' %}active{% endif %}">
+                        <i class="fas fa-dog sidebar-icon"></i>
+                        <span>Pets</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'products:category_list' %}"
+                        class="sidebar-link {% if '/products/categories' in request.path %}active{% endif %}">
+                        <i class="fas fa-tags sidebar-icon"></i>
+                        <span>Product Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'pets:category_list' %}"
+                        class="sidebar-link {% if '/pets/categories' in request.path %}active{% endif %}">
+                        <i class="fas fa-paw sidebar-icon"></i>
+                        <span>Pet Categories</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'dashboard:order_list' %}"
+                        class="sidebar-link {% if request.resolver_match.url_name == 'order_list' %}active{% endif %}">
+                        <i class="fas fa-shopping-bag sidebar-icon"></i>
+                        <span>Orders</span>
+                    </a>
+                </li>
+                <li class="sidebar-menu-item">
+                    <a href="{% url 'dashboard:appointment_list' %}"
+                        class="sidebar-link {% if request.resolver_match.url_name == 'appointment_list' %}active{% endif %}">
+                        <i class="fas fa-calendar-check sidebar-icon"></i>
+                        <span>Appointments</span>
+                    </a>
+                </li>
+
+                <li class="sidebar-menu-item mt-5">
+                    <a href="{% url 'accounts:logout' %}" class="sidebar-link text-danger">
+                        <i class="fas fa-sign-out-alt sidebar-icon"></i>
+                        <span>Logout</span>
+                    </a>
+                </li>
+            </ul>
+        </aside>
+
+        <!-- Main Content -->
+        <main class="dashboard-main">
+            <!-- Header -->
+            <header class="dashboard-header">
+                <div class="d-flex align-items-center">
+                    <button class="btn btn-outline-secondary d-lg-none me-3" id="sidebarToggle">
+                        <i class="fas fa-bars"></i>
+                    </button>
+                    <h2 class="dashboard-title">{% block page_title %}Overview{% endblock %}</h2>
+                </div>
+
+                <div class="d-flex align-items-center gap-3">
+                    <div class="dropdown">
+                        <a href="#" class="d-flex align-items-center text-decoration-none dropdown-toggle text-dark"
+                            id="userDropdown" data-bs-toggle="dropdown">
+                            <div class="bg-primary text-white rounded-circle d-flex align-items-center justify-content-center me-2"
+                                style="width: 40px; height: 40px;">
+                                {{ request.user.username|make_list|first|upper }}
+                            </div>
+                            <span class="fw-bold d-none d-md-block">{{ request.user.username }}</span>
+                        </a>
+                        <ul class="dropdown-menu dropdown-menu-end shadow">
+                            <li><a class="dropdown-item" href="{% url 'accounts:profile' %}">Profile</a></li>
+                            <li><a class="dropdown-item" href="{% url 'home' %}">View Site</a></li>
+                            <li>
+                                <hr class="dropdown-divider">
+                            </li>
+                            <li><a class="dropdown-item text-danger" href="{% url 'accounts:logout' %}">Logout</a></li>
+                        </ul>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Content -->
+            <div class="dashboard-content">
+                {% if messages %}
+                <div class="messages mb-4">
+                    {% for message in messages %}
+                    <div class="alert alert-{{ message.tags }} alert-dismissible fade show">
+                        {{ message }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert"></button>
+                    </div>
+                    {% endfor %}
+                </div>
+                {% endif %}
+
+                {% block content %}{% endblock %}
+            </div>
+        </main>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+    <!-- Custom Dashboard JS -->
+    <script>
+        // Sidebar Toggle for Mobile
+        document.getElementById('sidebarToggle')?.addEventListener('click', function () {
+            document.getElementById('sidebar').classList.toggle('open');
+        });
+
+        // Close sidebar when clicking outside on mobile
+        document.addEventListener('click', function (event) {
+            const sidebar = document.getElementById('sidebar');
+            const toggle = document.getElementById('sidebarToggle');
+
+            if (window.innerWidth < 992 &&
+                sidebar.classList.contains('open') &&
+                !sidebar.contains(event.target) &&
+                !toggle.contains(event.target)) {
+                sidebar.classList.remove('open');
+            }
+        });
+    </script>
+    {% block extra_js %}{% endblock %}
+</body>
+
+</html>

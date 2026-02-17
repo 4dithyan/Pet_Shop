@@ -1,0 +1,22 @@
+{% extends 'dashboard/base_dashboard.html' %}
+{% load crispy_forms_tags %}
+
+{% block page_title %}{{ title }}{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0">{{ title }}</h5>
+    </div>
+    <div class="card-body p-4">
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            {{ form|crispy }}
+            <div class="d-flex justify-content-end gap-2 mt-4">
+                <a href="{% url 'dashboard:pet_list' %}" class="btn btn-secondary">Cancel</a>
+                <button type="submit" class="btn btn-primary">Save Pet</button>
+            </div>
+        </form>
+    </div>
+</div>
+{% endblock %}

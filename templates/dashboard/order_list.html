@@ -1,0 +1,62 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block page_title %}Orders{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3">
+        <h5 class="mb-0">Order History</h5>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Order ID</th>
+                        <th>Customer</th>
+                        <th>Date</th>
+                        <th>Total</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for order in orders %}
+                    <tr>
+                        <td class="ps-4 fw-bold text-primary">#{{ order.id }}</td>
+                        <td>
+                            <div class="d-flex align-items-center">
+                                <div class="bg-light rounded-circle d-flex align-items-center justify-content-center text-primary fw-bold me-2"
+                                    style="width: 32px; height: 32px; font-size: 0.8rem;">
+                                    {{ order.user.username|make_list|first|upper }}
+                                </div>
+                                <span>{{ order.user.username }}</span>
+                            </div>
+                        </td>
+                        <td>{{ order.created_at|date:"M d, Y" }}</td>
+                        <td class="fw-bold">₹{{ order.total_amount }}</td>
+                        <td>
+                            <span class="badge 
+                                {% if order.status == 'Delivered' %}bg-success bg-opacity-10 text-success
+                                {% elif order.status == 'Processing' %}bg-info bg-opacity-10 text-info
+                                {% elif order.status == 'Cancelled' %}bg-danger bg-opacity-10 text-danger
+                                {% else %}bg-secondary bg-opacity-10 text-secondary{% endif %} px-3 py-2">
+                                {{ order.status }}
+                            </span>
+                        </td>
+                        <td class="text-end pe-4">
+                            <a href="#" class="btn btn-sm btn-outline-primary">Details</a>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">No orders found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

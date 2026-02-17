@@ -1,0 +1,376 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}PetGlow | Experience Premium Pet Care{% endblock %}
+
+{% block content %}
+<!-- Hero Section -->
+<section class="hero-section">
+    <div class="swiper heroSwiper">
+        <div class="swiper-wrapper">
+            <!-- Slide 1 -->
+            <div class="swiper-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">Bonding with Nature</h1>
+                    <p class="hero-text">Experience the purest connection with your furry companions.</p>
+                    <a href="{% url 'pets:pet_list' %}" class="btn btn-custom btn-primary-custom">Find a Friend</a>
+                </div>
+            </div>
+            <!-- Slide 2 -->
+            <div class="swiper-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1514888286974-6c03e2ca1dba?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">Premium Care</h1>
+                    <p class="hero-text">Exclusive products for your pet's luxury lifestyle.</p>
+                    <a href="{% url 'products:product_list' %}" class="btn btn-custom btn-primary-custom">Shop
+                        Essentials</a>
+                </div>
+            </div>
+            <!-- Slide 3 -->
+            <div class="swiper-slide"
+                style="background-image: url('https://images.unsplash.com/photo-1450778869180-41d0601e046e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+                <div class="hero-overlay"></div>
+                <div class="hero-content">
+                    <h1 class="hero-title">Expert Grooming</h1>
+                    <p class="hero-text">Professional care to make them shine.</p>
+                    <a href="{% url 'appointments:book_appointment' %}" class="btn btn-custom btn-primary-custom">Book
+                        Service</a>
+                </div>
+            </div>
+        </div>
+        <div class="swiper-pagination"></div>
+    </div>
+</section>
+
+<!-- Stats Section -->
+<section class="py-5 bg-white">
+    <div class="container">
+        <div class="row text-center g-4">
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="0">
+                <h3 class="display-4 fw-bold text-primary mb-0">500+</h3>
+                <p class="text-muted">Happy Pets</p>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="100">
+                <h3 class="display-4 fw-bold text-primary mb-0">1k+</h3>
+                <p class="text-muted">Products Sold</p>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="200">
+                <h3 class="display-4 fw-bold text-primary mb-0">99%</h3>
+                <p class="text-muted">Customer Love</p>
+            </div>
+            <div class="col-md-3" data-aos="fade-up" data-aos-delay="300">
+                <h3 class="display-4 fw-bold text-primary mb-0">24/7</h3>
+                <p class="text-muted">Support</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Featured Pets (Grid) -->
+<section class="container" id="pets">
+    <div class="section-header" data-aos="fade-up">
+        <span class="section-subtitle">Companions</span>
+        <h2>Meet Our Stars</h2>
+        <p class="lead text-muted mx-auto" style="max-width: 600px;">Hand-picked pets looking for a loving home.</p>
+    </div>
+
+    <div class="row g-4">
+        {% for pet in featured_pets %}
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="{{ forloop.counter }}00">
+            <div class="pet-card h-100">
+                <div class="pet-img-wrapper">
+                    <img src="{{ pet.image.url }}" alt="{{ pet.name }}" class="pet-img">
+                    <div class="position-absolute top-0 end-0 m-3">
+                        <span class="badge bg-white text-dark shadow-sm px-3 py-2 rounded-pill">₹{{ pet.price }}</span>
+                    </div>
+                </div>
+                <div class="p-4">
+                    <div class="d-flex justify-content-between align-items-center mb-2">
+                        <h4 class="mb-0">{{ pet.name }}</h4>
+                        <span class="text-muted small">{{ pet.breed }}</span>
+                    </div>
+                    <p class="text-muted mb-4">{{ pet.description|truncatewords:10 }}</p>
+                    <a href="{% url 'pets:pet_detail' pet.pk %}" class="btn btn-outline-primary w-100 rounded-pill">Meet
+                        {{ pet.name }}</a>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <!-- Placeholder for design visualization -->
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="pet-card h-100">
+                <div class="pet-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1543466835-00a7907e9de1?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Dog" class="pet-img">
+                </div>
+                <div class="p-4">
+                    <h4>Bella</h4>
+                    <p class="text-muted">Golden Retriever • 2 Months</p>
+                    <button class="btn btn-outline-primary w-100 rounded-pill">View Details</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="pet-card h-100">
+                <div class="pet-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1533738363-b7f9aef128ce?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Cat" class="pet-img">
+                </div>
+                <div class="p-4">
+                    <h4>Luna</h4>
+                    <p class="text-muted">Persian • 1 Year</p>
+                    <button class="btn btn-outline-primary w-100 rounded-pill">View Details</button>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6 col-lg-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="pet-card h-100">
+                <div class="pet-img-wrapper">
+                    <img src="https://images.unsplash.com/photo-1552053831-71594a27632d?ixlib=rb-4.0.3&auto=format&fit=crop&w=800&q=80"
+                        alt="Dog" class="pet-img">
+                </div>
+                <div class="p-4">
+                    <h4>Charlie</h4>
+                    <p class="text-muted">Labrador • 3 Months</p>
+                    <button class="btn btn-outline-primary w-100 rounded-pill">View Details</button>
+                </div>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+
+    <div class="text-center mt-5">
+        <a href="{% url 'pets:pet_list' %}" class="btn btn-custom btn-primary-custom">View All Pets</a>
+    </div>
+</section>
+
+<!-- Parallax Story Section -->
+<section class="parallax-section"
+    style="background-image: url('https://images.unsplash.com/photo-1444212477490-ca407925329e?ixlib=rb-4.0.3&auto=format&fit=crop&w=1920&q=80');">
+    <div class="parallax-overlay"></div>
+    <div class="container position-relative z-2 text-center">
+        <h2 class="text-white mb-4" data-aos="fade-up">Designed for Happiness</h2>
+        <p class="lead text-white-50 mb-5 mx-auto" style="max-width: 700px;" data-aos="fade-up" data-aos-delay="100">
+            We believe every pet deserves a life full of love, adventure, and comfort. That's why we curate only the
+            best.
+        </p>
+        <a href="{% url 'products:product_list' %}" class="btn btn-custom btn-primary-custom" data-aos="zoom-in"
+            data-aos-delay="200">Explore Lifestyle</a>
+    </div>
+</section>
+
+<!-- Shop by Category (Horizontal Scroll) -->
+<section class="bg-white">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-subtitle">Collections</span>
+            <h2>Shop by Category</h2>
+        </div>
+    </div>
+
+    <div class="horizontal-scroll-wrapper ps-lg-5">
+        <!-- Dogs -->
+        <a href="{% url 'products:product_list' %}?category=dogs" class="category-card" data-aos="fade-left">
+            <img src="https://images.unsplash.com/photo-1583337130417-3346a1be7dee?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Dogs" class="w-100 h-100 object-fit-cover">
+            <div class="category-overlay">
+                <h3 class="text-white mb-0">Dogs</h3>
+            </div>
+        </a>
+        <!-- Cats -->
+        <a href="{% url 'products:product_list' %}?category=cats" class="category-card" data-aos="fade-left"
+            data-aos-delay="100">
+            <img src="https://images.unsplash.com/photo-1513245543132-31f507417b26?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Cats" class="w-100 h-100 object-fit-cover">
+            <div class="category-overlay">
+                <h3 class="text-white mb-0">Cats</h3>
+            </div>
+        </a>
+        <!-- Birds -->
+        <a href="{% url 'products:product_list' %}?category=birds" class="category-card" data-aos="fade-left"
+            data-aos-delay="200">
+            <img src="https://images.unsplash.com/photo-1522926193341-e9e6d9b86063?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Birds" class="w-100 h-100 object-fit-cover">
+            <div class="category-overlay">
+                <h3 class="text-white mb-0">Birds</h3>
+            </div>
+        </a>
+        <!-- Accessories -->
+        <a href="{% url 'products:product_list' %}?category=accessories" class="category-card" data-aos="fade-left"
+            data-aos-delay="300">
+            <img src="https://images.unsplash.com/photo-1576201836106-db1758fd1c97?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Accessories" class="w-100 h-100 object-fit-cover">
+            <div class="category-overlay">
+                <h3 class="text-white mb-0">Accessories</h3>
+            </div>
+        </a>
+        <!-- Food -->
+        <a href="{% url 'products:product_list' %}?category=food" class="category-card" data-aos="fade-left"
+            data-aos-delay="400">
+            <img src="https://images.unsplash.com/photo-1589924691195-41432c84c161?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Food" class="w-100 h-100 object-fit-cover">
+            <div class="category-overlay">
+                <h3 class="text-white mb-0">Food</h3>
+            </div>
+        </a>
+    </div>
+</section>
+
+<!-- Services Section -->
+<section class="container">
+    <div class="section-header" data-aos="fade-up">
+        <span class="section-subtitle">We Care</span>
+        <h2>Our Services</h2>
+    </div>
+
+    <div class="row g-4">
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="100">
+            <div class="service-card h-100">
+                <div class="service-icon">
+                    <i class="fas fa-cut"></i>
+                </div>
+                <h4>Pet Grooming</h4>
+                <p class="text-muted">Spa days for your furry friends with organic products.</p>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="200">
+            <div class="service-card h-100">
+                <div class="service-icon">
+                    <i class="fas fa-user-md"></i>
+                </div>
+                <h4>Veterinary Care</h4>
+                <p class="text-muted">Expert health checkups and vaccinations.</p>
+            </div>
+        </div>
+        <div class="col-md-4" data-aos="fade-up" data-aos-delay="300">
+            <div class="service-card h-100">
+                <div class="service-icon">
+                    <i class="fas fa-school"></i>
+                </div>
+                <h4>Pet Training</h4>
+                <p class="text-muted">Positive reinforcement training for better behavior.</p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Testimonials -->
+<section class="bg-white">
+    <div class="container">
+        <div class="section-header" data-aos="fade-up">
+            <span class="section-subtitle">Love Stories</span>
+            <h2>Happy Parents</h2>
+        </div>
+
+        <div class="swiper testimonialSwiper pb-5" data-aos="fade-up" data-aos-delay="200">
+            <div class="swiper-wrapper">
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/women/44.jpg" alt="User" class="testimonial-img">
+                        <p class="fst-italic text-muted mb-3">"The grooming service is exceptional! My Bella always
+                            comes back looking like a princess."</p>
+                        <h5 class="mb-0">Sarah Jenkins</h5>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/men/32.jpg" alt="User" class="testimonial-img">
+                        <p class="fst-italic text-muted mb-3">"Found the perfect companion here. The staff really cares
+                            about the animals."</p>
+                        <h5 class="mb-0">Mike Ross</h5>
+                    </div>
+                </div>
+                <div class="swiper-slide">
+                    <div class="testimonial-card">
+                        <img src="https://randomuser.me/api/portraits/women/68.jpg" alt="User" class="testimonial-img">
+                        <p class="fst-italic text-muted mb-3">"Premium quality food and toys. My go-to store for
+                            everything pet related!"</p>
+                        <h5 class="mb-0">Emily Clark</h5>
+                    </div>
+                </div>
+            </div>
+            <div class="swiper-pagination"></div>
+        </div>
+    </div>
+</section>
+
+<!-- Gallery (Masonry) -->
+<section class="container pb-5">
+    <div class="section-header mb-5" data-aos="fade-up">
+        <span class="section-subtitle">Moments</span>
+        <h2>Gallery</h2>
+    </div>
+
+    <div class="gallery-grid">
+        <div class="gallery-item" data-aos="zoom-in">
+            <img src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Pet" class="w-100 h-100 object-fit-cover">
+            <div class="gallery-overlay">
+                <i class="fas fa-heart text-white fs-2"></i>
+            </div>
+        </div>
+        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="100">
+            <img src="https://images.unsplash.com/photo-1517849845537-4d257902454a?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Pet" class="w-100 h-100 object-fit-cover">
+            <div class="gallery-overlay">
+                <i class="fas fa-heart text-white fs-2"></i>
+            </div>
+        </div>
+        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="200">
+            <img src="https://images.unsplash.com/photo-1537151608828-ea2b11777ee8?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Pet" class="w-100 h-100 object-fit-cover">
+            <div class="gallery-overlay">
+                <i class="fas fa-heart text-white fs-2"></i>
+            </div>
+        </div>
+        <div class="gallery-item" data-aos="zoom-in" data-aos-delay="300">
+            <img src="https://images.unsplash.com/photo-1599187321156-f093122c4f74?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80"
+                alt="Pet" class="w-100 h-100 object-fit-cover">
+            <div class="gallery-overlay">
+                <i class="fas fa-heart text-white fs-2"></i>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock %}
+
+{% block extra_js %}
+<script>
+    // Hero Swiper
+    var heroSwiper = new Swiper(".heroSwiper", {
+        spaceBetween: 0,
+        effect: "fade",
+        loop: true,
+        autoplay: {
+            delay: 5000,
+            disableOnInteraction: false,
+        },
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+    });
+
+    // Testimonial Swiper
+    var testimonialSwiper = new Swiper(".testimonialSwiper", {
+        slidesPerView: 1,
+        spaceBetween: 30,
+        loop: true,
+        pagination: {
+            el: ".swiper-pagination",
+            clickable: true,
+        },
+        breakpoints: {
+            768: {
+                slidesPerView: 2,
+            },
+            1024: {
+                slidesPerView: 3,
+            },
+        },
+    });
+</script>
+{% endblock %}

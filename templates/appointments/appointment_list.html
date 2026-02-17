@@ -1,0 +1,54 @@
+{% extends 'base.html' %}
+
+{% block title %}My Appointments{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <h2 class="mb-4">My Appointments</h2>
+
+    <div class="card shadow-sm border-0">
+        <div class="card-body">
+            <div class="table-responsive">
+                <table class="table table-hover">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Service</th>
+                            <th>Date</th>
+                            <th>Time</th>
+                            <th>Pet Name</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for appointment in appointments %}
+                        <tr>
+                            <td>{{ appointment.get_service_type_display }}</td>
+                            <td>{{ appointment.date }}</td>
+                            <td>{{ appointment.time }}</td>
+                            <td>{{ appointment.pet_name }}</td>
+                            <td>
+                                <span
+                                    class="badge {% if appointment.status == 'Confirmed' %}bg-success{% elif appointment.status == 'Pending' %}bg-warning text-dark{% else %}bg-secondary{% endif %}">
+                                    {{ appointment.status }}
+                                </span>
+                            </td>
+                            <td>
+                                {% if appointment.status == 'Pending' %}
+                                <a href="{% url 'appointments:cancel_appointment' appointment.pk %}"
+                                    class="btn btn-sm btn-outline-danger">Cancel</a>
+                                {% endif %}
+                            </td>
+                        </tr>
+                        {% empty %}
+                        <tr>
+                            <td colspan="6" class="text-center py-4">No appointments found.</td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

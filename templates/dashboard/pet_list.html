@@ -1,0 +1,76 @@
+{% extends 'dashboard/base_dashboard.html' %}
+
+{% block page_title %}Pets{% endblock %}
+
+{% block content %}
+<div class="card border-0 shadow-sm">
+    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+        <h5 class="mb-0">Pet List</h5>
+        <a href="{% url 'pets:pet_create' %}" class="btn btn-primary btn-sm"><i class="fas fa-plus me-1"></i> Add
+            Pet</a>
+    </div>
+    <div class="card-body p-0">
+        <div class="table-responsive">
+            <table class="table table-hover align-middle mb-0">
+                <thead class="bg-light">
+                    <tr>
+                        <th class="ps-4">Pet</th>
+                        <th>Breed</th>
+                        <th>Age</th>
+                        <th>Price</th>
+                        <th>Status</th>
+                        <th class="text-end pe-4">Actions</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for pet in pets %}
+                    <tr>
+                        <td class="ps-4">
+                            <div class="d-flex align-items-center">
+                                {% if pet.image %}
+                                <img src="{{ pet.image.url }}" alt="{{ pet.name }}" class="rounded" width="40"
+                                    height="40" style="object-fit: cover;">
+                                {% else %}
+                                <div class="bg-light rounded d-flex align-items-center justify-content-center text-muted"
+                                    style="width: 40px; height: 40px;">
+                                    <i class="fas fa-dog"></i>
+                                </div>
+                                {% endif %}
+                                <span class="ms-3 fw-bold text-dark">{{ pet.name }}</span>
+                            </div>
+                        </td>
+                        <td>{{ pet.breed }}</td>
+                        <td>{{ pet.age }} {{ pet.age_unit }}</td>
+                        <td class="fw-bold">₹{{ pet.price }}</td>
+                        <td>
+                            {% if pet.is_available %}
+                            <span class="badge bg-success bg-opacity-10 text-success px-3">Available</span>
+                            {% else %}
+                            <span class="badge bg-secondary bg-opacity-10 text-secondary px-3">Adopted</span>
+                            {% endif %}
+                        </td>
+                        <td class="text-end pe-4">
+                            <div class="btn-group">
+                                <a href="{% url 'pets:pet_update' pet.pk %}" class="btn btn-sm btn-outline-secondary"
+                                    title="Edit">
+                                    <i class="fas fa-edit"></i>
+                                </a>
+                                <a href="{% url 'pets:pet_delete' pet.pk %}" class="btn btn-sm btn-outline-danger"
+                                    title="Delete">
+                                    <i class="fas fa-trash"></i>
+                                </a>
+                            </div>
+                        </td>
+                    </tr>
+                    {% empty %}
+                    <tr>
+                        <td colspan="6" class="text-center py-5 text-muted">No pets found.</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+</div>
+</div>
+{% endblock %}

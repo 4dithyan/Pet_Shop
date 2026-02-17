@@ -1,0 +1,65 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}Shop Products{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <div class="row mb-4 align-items-center">
+        <div class="col-md-6">
+            <h1 class="display-5 fw-bold text-primary">Shop Products</h1>
+            <p class="lead text-muted">Premium supplies for your furry friends</p>
+        </div>
+        <div class="col-md-6">
+            <form class="d-flex gap-2" method="get">
+                <input class="form-control" type="search" name="search" placeholder="Search products..."
+                    value="{{ search_query }}">
+                <select class="form-select w-auto" name="category" onchange="this.form.submit()">
+                    <option value="">All Categories</option>
+                    {% for category in categories %}
+                    <option value="{{ category.id }}" {% if selected_category == category.id %}selected{% endif %}>
+                        {{ category.name }}
+                    </option>
+                    {% endfor %}
+                </select>
+                <button class="btn btn-primary" type="submit"><i class="fas fa-search"></i></button>
+            </form>
+        </div>
+    </div>
+
+    <div class="row g-4">
+        {% for product in products %}
+        <div class="col-md-6 col-lg-3">
+            <div class="card h-100 product-card shadow-sm border-0">
+                <div class="position-relative overflow-hidden">
+                    <img src="{{ product.image.url }}" class="card-img-top product-img" alt="{{ product.name }}"
+                        style="height: 250px; object-fit: cover;">
+                    {% if product.is_low_stock %}
+                    <span class="badge bg-warning position-absolute top-0 end-0 m-3">Low Stock</span>
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <small class="text-muted">{{ product.category.name }}</small>
+                    <h5 class="card-title mt-1"><a href="{% url 'products:product_detail' product.pk %}"
+                            class="text-decoration-none text-dark">{{ product.name }}</a></h5>
+                    <p class="card-text fw-bold text-primary fs-5">?{{ product.price }}</p>
+                    <div class="d-grid gap-2">
+                        <a href="{% url 'products:product_detail' product.pk %}"
+                            class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+        {% empty %}
+        <div class="col-12 text-center py-5">
+            <div class="py-5">
+                <i class="fas fa-box-open fa-4x text-muted mb-3"></i>
+                <h3>No products found</h3>
+                <p class="text-muted">Try adjusting your search or category filter.</p>
+                <a href="{% url 'products:product_list' %}" class="btn btn-primary mt-2">Clear Filters</a>
+            </div>
+        </div>
+        {% endfor %}
+    </div>
+</div>
+{% endblock %}

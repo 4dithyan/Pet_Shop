@@ -1,0 +1,92 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block title %}{{ pet.name }} - Adopt Me{% endblock %}
+
+{% block content %}
+<div class="container py-5">
+    <nav aria-label="breadcrumb" class="mb-4">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="{% url 'pets:pet_list' %}">Pets</a></li>
+            <li class="breadcrumb-item active" aria-current="page">{{ pet.name }}</li>
+        </ol>
+    </nav>
+
+    <div class="row g-5">
+        <div class="col-md-6">
+            <div class="position-relative">
+                <img src="{{ pet.image.url }}" class="img-fluid rounded shadow-lg" alt="{{ pet.name }}"
+                    style="width: 100%; object-fit: cover;">
+                <div class="position-absolute top-0 end-0 m-3">
+                    <span class="badge bg-primary fs-5">{{ pet.breed }}</span>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="ps-md-4">
+                <h1 class="display-4 fw-bold mb-2">{{ pet.name }}</h1>
+                <p class="text-muted fs-4 mb-4">₹{{ pet.price }}</p>
+
+                <div class="row mb-4">
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-venus-mars fa-2x text-primary me-3"></i>
+                            <div>
+                                <small class="text-muted d-block">Gender</small>
+                                <strong>{{ pet.gender }}</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-6">
+                        <div class="d-flex align-items-center mb-3">
+                            <i class="fas fa-birthday-cake fa-2x text-primary me-3"></i>
+                            <div>
+                                <small class="text-muted d-block">Age</small>
+                                <strong>{{ pet.age }} years</strong>
+                            </div>
+                        </div>
+                    </div>
+                    <!-- Add more attributes as needed -->
+                </div>
+
+                <hr class="my-4">
+
+                <h4 class="mb-3">About {{ pet.name }}</h4>
+                <p class="lead text-muted mb-5">{{ pet.description }}</p>
+
+                <div class="d-grid gap-2">
+                    <a href="#" class="btn btn-primary btn-lg rounded-pill">
+                        <i class="fas fa-paw me-2"></i> Adopt {{ pet.name }}
+                    </a>
+                    <a href="{% url 'appointments:book_visit' pet.pk %}"
+                        class="btn btn-outline-primary btn-lg rounded-pill">
+                        <i class="fas fa-calendar-alt me-2"></i> Book a Visit
+                    </a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    {% if related_pets %}
+    <div class="mt-5 pt-5 border-top">
+        <h3 class="mb-4">Other Pets You Might Like</h3>
+        <div class="row g-4">
+            {% for rel_pet in related_pets %}
+            <div class="col-md-3">
+                <div class="card h-100 border-0 shadow-sm">
+                    <img src="{{ rel_pet.image.url }}" class="card-img-top" alt="{{ rel_pet.name }}"
+                        style="height: 200px; object-fit: cover;">
+                    <div class="card-body">
+                        <h5 class="card-title">{{ rel_pet.name }}</h5>
+                        <p class="card-text text-muted">{{ rel_pet.breed }}</p>
+                        <a href="{% url 'pets:pet_detail' rel_pet.pk %}"
+                            class="btn btn-outline-primary btn-sm stretched-link">View Details</a>
+                    </div>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+    </div>
+    {% endif %}
+</div>
+{% endblock %}
