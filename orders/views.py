@@ -115,4 +115,4 @@ def update_order_status(request, pk):
             order.status = status
             order.save()
             messages.success(request, f'Order status updated to {status}!')
-    return redirect('orders:order_detail', pk=pk)
+    return redirect(request.META.get('HTTP_REFERER', 'dashboard:order_list'))
