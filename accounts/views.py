@@ -38,7 +38,7 @@ def register_view(request):
             
             try:
                 send_mail(subject, message, from_email, recipient_list)
-                messages.success(request, f'OTP sent to {email}. Please verify.')
+                messages.success(request, f'OTP sent to {email}. Please verify. (TESTING OTP: {otp})')
                 return redirect('accounts:verify_otp')
             except Exception as e:
                 messages.error(request, f'Error sending email: {e}')

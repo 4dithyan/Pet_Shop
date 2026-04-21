@@ -16,7 +16,15 @@ class Category(models.Model):
     
     def save(self, *args, **kwargs):
         if not self.slug:
-            self.slug = slugify(self.name)
+            original_slug = slugify(self.name)
+            queryset = Category.objects.filter(slug__iexact=original_slug).exclude(pk=self.pk)
+            count = 1
+            slug = original_slug
+            while queryset.exists():
+                slug = f'{original_slug}-{count}'
+                count += 1
+                queryset = Category.objects.filter(slug__iexact=slug).exclude(pk=self.pk)
+            self.slug = slug
         super().save(*args, **kwargs)
     
     def __str__(self):

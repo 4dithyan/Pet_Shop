@@ -55,7 +55,7 @@
                 <p class="lead text-muted mb-5">{{ pet.description }}</p>
 
                 <div class="d-grid gap-2">
-                    <a href="#" class="btn btn-primary btn-lg rounded-pill">
+                    <a href="{% url 'appointments:book_adoption' pet.pk %}" class="btn btn-primary btn-lg rounded-pill">
                         <i class="fas fa-paw me-2"></i> Adopt {{ pet.name }}
                     </a>
                     <a href="{% url 'appointments:book_visit' pet.pk %}"

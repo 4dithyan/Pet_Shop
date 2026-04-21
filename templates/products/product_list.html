@@ -42,7 +42,7 @@
                     <small class="text-muted">{{ product.category.name }}</small>
                     <h5 class="card-title mt-1"><a href="{% url 'products:product_detail' product.pk %}"
                             class="text-decoration-none text-dark">{{ product.name }}</a></h5>
-                    <p class="card-text fw-bold text-primary fs-5">?{{ product.price }}</p>
+                    <p class="card-text fw-bold text-primary fs-5">₹{{ product.price }}</p>
                     <div class="d-grid gap-2">
                         <a href="{% url 'products:product_detail' product.pk %}"
                             class="btn btn-outline-primary btn-sm rounded-pill">View Details</a>

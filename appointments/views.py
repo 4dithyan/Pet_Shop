@@ -53,6 +53,32 @@ def book_visit(request, pet_id):
 
 
 @login_required
+def book_adoption(request, pet_id):
+    """
+    Apply for pet adoption
+    """
+    pet = get_object_or_404(Pet, pk=pet_id)
+    
+    if request.method == 'POST':
+        form = AppointmentForm(request.POST)
+        if form.is_valid():
+            appointment = form.save(commit=False)
+            appointment.user = request.user
+            appointment.save()
+            messages.success(request, f'Adoption application for {pet.name} submitted successfully! Awaiting approval.')
+            return redirect('appointments:appointment_list')
+    else:
+        initial_data = {
+            'service_type': 'Adoption',
+            'pet_name': pet.name,
+            'notes': f"Applying to adopt {pet.name} ({pet.breed})"
+        }
+        form = AppointmentForm(initial=initial_data)
+    
+    return render(request, 'appointments/book_adoption.html', {'form': form, 'pet': pet})
+
+
+@login_required
 def appointment_list(request):
     """
     List all appointments for current user or all if staff
@@ -80,7 +106,7 @@ def approve_appointment(request, pk):
             appointment.status = status
             appointment.save()
             messages.success(request, f'Appointment status updated to {status}!')
-    return redirect('appointments:appointment_list')
+    return redirect(request.META.get('HTTP_REFERER', 'appointments:appointment_list'))
 
 
 @login_required

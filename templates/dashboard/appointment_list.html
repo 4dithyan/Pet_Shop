@@ -32,7 +32,7 @@
                         <td>{{ appointment.pet_name }}</td>
                         <td>
                             <span class="badge 
-                                {% if appointment.status == 'Confirmed' %}bg-success bg-opacity-10 text-success
+                                {% if appointment.status == 'Approved' %}bg-success bg-opacity-10 text-success
                                 {% elif appointment.status == 'Pending' %}bg-warning bg-opacity-10 text-warning
                                 {% elif appointment.status == 'Cancelled' %}bg-danger bg-opacity-10 text-danger
                                 {% else %}bg-secondary bg-opacity-10 text-secondary{% endif %} px-3">
@@ -41,12 +41,20 @@
                         </td>
                         <td class="text-end pe-4">
                             <div class="btn-group">
-                                <a href="#" class="btn btn-sm btn-outline-success" title="Confirm">
-                                    <i class="fas fa-check"></i>
-                                </a>
-                                <a href="#" class="btn btn-sm btn-outline-danger" title="Cancel">
-                                    <i class="fas fa-times"></i>
-                                </a>
+                                <form method="post" action="{% url 'appointments:approve_appointment' appointment.pk %}" class="d-inline">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="Approved">
+                                    <button type="submit" class="btn btn-sm btn-outline-success" title="Approve">
+                                        <i class="fas fa-check"></i>
+                                    </button>
+                                </form>
+                                <form method="post" action="{% url 'appointments:approve_appointment' appointment.pk %}" class="d-inline ms-1">
+                                    {% csrf_token %}
+                                    <input type="hidden" name="status" value="Cancelled">
+                                    <button type="submit" class="btn btn-sm btn-outline-danger" title="Cancel">
+                                        <i class="fas fa-times"></i>
+                                    </button>
+                                </form>
                             </div>
                         </td>
                     </tr>

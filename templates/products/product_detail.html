@@ -29,8 +29,7 @@
 
                 <div class="mb-4">
                     {% if product.stock_quantity > 0 %}
-                    <span class="text-success"><i class="fas fa-check-circle"></i> In Stock ({{ product.stock_quantity
-                        }} available)</span>
+                    <span class="text-success"><i class="fas fa-check-circle"></i> In Stock ({{ product.stock_quantity }} available)</span>
                     {% else %}
                     <span class="text-danger"><i class="fas fa-times-circle"></i> Out of Stock</span>
                     {% endif %}
@@ -50,8 +49,7 @@
                             </div>
                             <div class="col">
                                 <input type="hidden" name="update" value="False">
-                                <button type="submit" class="btn btn-primary w-100" {% if product.stock_quantity == 0
-                                    %}disabled{% endif %}>
+                                <button type="submit" class="btn btn-primary w-100" {% if product.stock_quantity == 0 %}disabled{% endif %}>
                                     <i class="fas fa-shopping-cart me-2"></i> Add to Cart
                                 </button>
                             </div>

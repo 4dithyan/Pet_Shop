@@ -52,9 +52,10 @@ class Cart:
         """
         Iterate over the items in the cart and get the products from the database
         """
+        import copy
         product_ids = self.cart.keys()
         products = Product.objects.filter(id__in=product_ids)
-        cart = self.cart.copy()
+        cart = copy.deepcopy(self.cart)
         for product in products:
             cart[str(product.id)]['product'] = product
         for item in cart.values():

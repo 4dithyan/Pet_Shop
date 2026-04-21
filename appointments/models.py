@@ -10,6 +10,7 @@ class Appointment(models.Model):
         ('Vaccination', 'Vaccination'),
         ('Checkup', 'General Checkup'),
         ('Visit', 'Pet Visit'),
+        ('Adoption', 'Pet Adoption'),
     )
     
     STATUS_CHOICES = (
