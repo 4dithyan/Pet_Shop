@@ -34,10 +34,6 @@
 
 ### 2. Install Python Dependencies
 
-```bash
-# Navigate to project directory
-cd d:\Theres\Anandhu\Petstore
-
 # Install required packages
 pip install -r requirements.txt
 ```
